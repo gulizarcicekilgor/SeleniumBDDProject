@@ -5,11 +5,12 @@ import java.util.List;
 
 public class CartPage extends BasePage {
     private final By productName = By.xpath("//p[@class='pb-item']");
-    private final By cartItems = By.cssSelector(".cart-item");
-    private final By itemPrices = By.cssSelector(".item-price");
     private final By totalPrice = By.id("totalAmount");
-    private final By emptyCartMessage = By.id("emptyCartMessage");
     private final By popUpButton = By.xpath("//div[@class='tooltip-content']/button");
+    private final By productPrice = By.xpath("//div[@class='pb-basket-item-price']");
+    private final By cartPrice = By.xpath("//ul[@class='pb-summary-box-prices']/li[1]/strong");
+    private final By deleteLastProductBtn = By.xpath("//div[@class='pb-merchant-group'][last()]//button[@class='checkout-saving-remove-button']");
+
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -26,24 +27,23 @@ public class CartPage extends BasePage {
         return Double.parseDouble(totalText);
     }
 
-    public void removeFirstItem() {
-        $click(By.cssSelector(".remove-item:first-child"));
-    }
-
-    public boolean isCartEmpty() {
-        return driver.findElements(cartItems).isEmpty();
-    }
-
-    public List<Double> getAllItemPrices() {
-        return driver.findElements(itemPrices).stream()
-                .map(element -> element.getText()
-                        .replace("₺", "")
-                        .replace(",", "."))
-                .map(Double::parseDouble)
-                .toList();
-    }
-
     public void clickPopUpButton() {
         $click(popUpButton);
+    }
+    public double convertToDouble (By price) {
+        String priceText = $getText(price)
+                .replace("TL", "")
+                .replace(",", ".");
+        return Double.parseDouble(priceText);
+    }
+    public boolean verifyPriceControl()
+    {
+        return convertToDouble(productPrice) == convertToDouble(cartPrice) ;
+
+    }int i=0;
+    public void deleteLastProduct(){
+        $click(deleteLastProductBtn);
+
+
     }
 }

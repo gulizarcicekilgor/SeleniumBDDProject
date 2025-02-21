@@ -13,9 +13,9 @@ public class Hooks {
         System.out.println("Setting up driver...");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-notifications");  //Chrome bildirim izni kapatmak için
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\chromedriver-win64\\chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\chromedriver-win64\\chromedriver.exe");
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();

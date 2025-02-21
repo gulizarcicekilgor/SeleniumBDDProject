@@ -1,10 +1,6 @@
 package stepDefinitions;
 import io.cucumber.java.en.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.*;
-
-import java.time.Duration;
 import java.util.ArrayList;
 
 import static hooks.Hooks.driver;
@@ -24,6 +20,7 @@ public class ProductSteps {
     public void selectFirstProduct() {
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
         searchResultsPage.selectFirstResult();
+        //switchToNewWindow
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         productPage = new ProductPage(driver);
@@ -43,6 +40,7 @@ public class ProductSteps {
                 case "Product price" -> {
                     assert productPage.getProductPrice() > 0;
                 }
+                // Availability durumu için sepete ekle butonu var mı kontrolü yapıldı.
                 case "Availability text" -> {
                     assert !productPage.checkAvailability();
                 }

@@ -1,7 +1,7 @@
 Feature: Product Search Functionality
   As an online shopper
   User want to search for products
-  So User can find items wish to purchase
+  So  User can find items wish to purchase
 
   @search @smoke
   Scenario: Search for product and verify relevant results

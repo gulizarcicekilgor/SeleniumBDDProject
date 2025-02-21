@@ -30,14 +30,12 @@ public class SearchSteps {
     @Then("the search results should be displayed")
     public void verifySearchResultsDisplayed() {
         searchResultsPage = new SearchResultsPage(driver);
-        //System.out.println(searchResultsPage.getResults().size());
         assert !searchResultsPage.getResults().isEmpty();
     }
 
     @Then("results should contain text {string}")
     public void verifyResultsContainText(String expectedText) {
         searchResultsPage = new SearchResultsPage(driver);
-        //System.out.println(searchResultsPage.getCorrectResults(expectedText).size());
         assert !searchResultsPage.getCorrectResults(expectedText).isEmpty();
     }
 }

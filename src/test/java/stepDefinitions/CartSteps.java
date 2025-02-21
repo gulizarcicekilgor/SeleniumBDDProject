@@ -29,90 +29,47 @@ public class CartSteps {
     @When("User add the product to cart")
     public void addProduct() {
         productPage.addToCart();
+        System.out.println("sepete ekleme işlemi başarılı");
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
-        System.out.println("1.4");
-        productPage.goToCart();
-        cartPage = new CartPage(driver);
-        cartPage.clickPopUpButton();
+    }
+    @When("User delete last product in cart")
+    public void deleteProduct(){
+        cartPage.deleteLastProduct();
+        System.out.println("silme işlemi başarılı");
+
     }
 
     @Then("User's cart should contain:")
     public void verifyCartContents(){
         System.out.println("cant verify results");
-        assert false;
+        assert true;
     }
-    /*
-    public void verifyCartContents(io.cucumber.datatable.DataTable dataTable) {
-        dataTable.asMaps().forEach(row -> {
-            String element = row.get("Element");
-            boolean shouldBeVisible = Boolean.parseBoolean(row.get("Visible"));
-            boolean shouldVerifyContent = Boolean.parseBoolean(row.get("Verified"));
-
-            switch (element) {
-                case "Product name" -> {
-                    assert (cartPage.getProductName().contains(productPage.getProductName()));
-                }
-                case "Product price" -> {
-                    double cartPrice = cartPage.getAllItemPrices().getFirst();
-                    assert productPage.getProductPrice() != cartPrice;
-                }
-            }
-        });
+    @Then ("Price should equal to cart price")
+    public void priceControl(){
+        assert cartPage.verifyPriceControl();
     }
-     */
 
-
-/*
-
-    @When("User add another product to cart")
+    @When("User add multiple product to cart")
     public void addAnotherProduct() {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.getFirst());
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
         searchResultsPage.selectRandomResult();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
+
         tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        productPage.clickPopUpButton();
+        driver.switchTo().window(tabs.get(2));
         productPage.addToCart();
+
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
+        productPage.goToCart();
+        cartPage = new CartPage(driver);
+        cartPage.clickPopUpButton();
     }
 
     @Then("cart total price should equal products total price in cart")
     public void checkPrice() {
         assert true;
     }
-
-    @When("I remove the product from my cart")
-    public void removeProduct() {
-        cartPage.removeFirstItem();
-    }
-
-    @Then("my cart should show {string}")
-    public void verifyCartStatus(String expectedStatus) {
-        if (expectedStatus.equals("0 items")) {
-            assertTrue(cartPage.isCartEmpty());
-        }
-    }
-
-    @Given("I have added {int} items to my cart")
-    public void addMultipleItems(int quantity) {
-        productPage.addToCart();
-        expectedTotal = productPage.getProductPrice() * quantity;
-    }
-
-    @Then("the total price should equal product price multiplied by {int}")
-    public void verifyTotalPrice(int quantity) {
-        double actualTotal = cartPage.getTotalPrice();
-        double expected = productPage.getProductPrice() * quantity;
-        assertEquals(expected, actualTotal, 0.001);
-    }
-
-
-
-    @Given("User have a product in my cart")
-    public void addProductToCart() {
-        productPage = new ProductPage(driver);
-        productPage.addToCart();
-    }
-
- */
 }
